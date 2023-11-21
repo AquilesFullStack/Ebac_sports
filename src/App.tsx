@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Header from './components/Header'
 import Produtos from './containers/Produtos'
+import { adicionar } from './store/reducers/Favorito'
 
 import { GlobalStyle } from './styles'
 
@@ -22,13 +23,13 @@ function App() {
       .then((res) => setProdutos(res))
   }, [])
 
-  function adicionarAoCarrinho(produto: Produto) {
-    if (carrinho.find((p) => p.id === produto.id)) {
-      alert('Item já adicionado')
-    } else {
-      setCarrinho([...carrinho, produto])
-    }
-  }
+  // function adicionarAoCarrinho(produto: Produto) {
+  //   if (carrinho.find((p) => p.id === produto.id)) {
+  //     alert('Item já adicionado')
+  //   } else {
+  //     setCarrinho([...carrinho, produto])
+  //   }
+  // }
 
   function favoritar(produto: Produto) {
     if (favoritos.find((p) => p.id === produto.id)) {
@@ -48,7 +49,7 @@ function App() {
           produtos={produtos}
           favoritos={favoritos}
           favoritar={favoritar}
-          adicionarAoCarrinho={adicionarAoCarrinho}
+          adicionarAoCarrinho={adicionar}
         />
       </div>
     </>
