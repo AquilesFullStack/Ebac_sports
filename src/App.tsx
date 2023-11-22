@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import Header from './components/Header'
 import Produtos from './containers/Produtos'
-import { adicionar } from './store/reducers/Favorito'
+import { adicionar } from './store/reducers/Carrinho'
 
 import { GlobalStyle } from './styles'
+import { Provider } from 'react-redux'
+import { store } from './store'
+import { Produto } from './components/Produto/styles'
 
 export type Produto = {
   id: number
@@ -14,11 +17,11 @@ export type Produto = {
 
 function App() {
   const [produtos, setProdutos] = useState<Produto[]>([])
-  const [carrinho, setCarrinho] = useState<Produto[]>([])
-  const [favoritos, setFavoritos] = useState<Produto[]>([])
+  // const [carrinho, setCarrinho] = useState<Produto[]>([])
+  // const [favoritos, setFavoritos] = useState<Produto[]>([])
 
   useEffect(() => {
-    fetch('https://fake-api-tau.vercel.app/api/ebac_sports')
+    fetch('produtos')
       .then((res) => res.json())
       .then((res) => setProdutos(res))
   }, [])
@@ -31,27 +34,24 @@ function App() {
   //   }
   // }
 
-  function favoritar(produto: Produto) {
-    if (favoritos.find((p) => p.id === produto.id)) {
-      const favoritosSemProduto = favoritos.filter((p) => p.id !== produto.id)
-      setFavoritos(favoritosSemProduto)
-    } else {
-      setFavoritos([...favoritos, produto])
-    }
-  }
+  // function favoritar(produto: Produto) {
+  //   if (favoritos.find((p) => p.id === produto.id)) {
+  //     const favoritosSemProduto = favoritos.filter((p) => p.id !== produto.id)
+  //     setFavoritos(favoritosSemProduto)
+  //   } else {
+  //     setFavoritos([...favoritos, produto])
+  //   }
+  // }
 
   return (
     <>
-      <GlobalStyle />
-      <div className="container">
-        <Header favoritos={favoritos} itensNoCarrinho={carrinho} />
-        <Produtos
-          produtos={produtos}
-          favoritos={favoritos}
-          favoritar={favoritar}
-          adicionarAoCarrinho={adicionar}
-        />
-      </div>
+      <Provider store={store}>
+        <GlobalStyle />
+        <div className="container">
+          <Header />
+          <Produtos />
+        </div>
+      </Provider>
     </>
   )
 }
