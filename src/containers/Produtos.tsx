@@ -1,9 +1,10 @@
 import { Produto as ProdutoType } from '../App'
 import { useGetProdutosQuery } from '../services/api'
+import { Produtos } from '../containers/styles'
 
 import * as S from './styles'
 
-type Props = {
+export type Props = {
   produtos: ProdutoType[]
   favoritos: ProdutoType[]
   adicionarAoCarrinho: (produto: ProdutoType) => void
@@ -18,8 +19,8 @@ const ProdutoComponente = () => {
   return (
     <>
       <S.Produtos>
-        {produtos?.map((Produto) => (
-          <ProdutoComponente key={Produto.id} />
+        {produtos?.map((produto) => (
+          <Produtos key={produto.id} />
         ))}
       </S.Produtos>
     </>
